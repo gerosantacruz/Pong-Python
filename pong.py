@@ -8,6 +8,10 @@ wm.bgcolor("black")
 wm.setup(width=800, height=600)
 wm.tracer(0)
 
+#Score 
+point_a = 0
+point_b = 0
+
 
 # Paddle A
 paddle_a = turtle.Turtle()
@@ -36,6 +40,15 @@ ball.penup()
 ball.goto(0, 0)
 ball.dx = 0.3
 ball.dy = -0.3
+
+#Score Board 'pen'
+pen = turtle.Turtle()
+pen.speed(0)
+pen.penup()
+pen.color("white")
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Player A: 0  Player B: 0", align="center", font=("Consolas", 24, "normal"))
 
 
 # Function
@@ -90,11 +103,20 @@ while True:
     if ball.xcor() > 390:
         ball.goto(0, 0)
         ball.dx *= -1
+        point_a += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(point_a, point_b), align="center", font=("Consolas", 24, "normal"))
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
-        ball.dx *= -1
+        ball.dx *= -1 
+        point_b += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(point_a,point_b), align="center", font=("Consolas", 24, "normal"))
 
+
+    #Paddle border collision
+    
     if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
         ball.setx(340)
         ball.dx *= -1
@@ -102,3 +124,6 @@ while True:
     if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
         ball.setx(-340)
         ball.dx *= -1
+
+    
+    
